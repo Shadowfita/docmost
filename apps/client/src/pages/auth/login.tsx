@@ -20,7 +20,7 @@ export default function LoginPage() {
   return (
     <>
       <Helmet>
-        <title>Login</title>
+        <title>Login - Docmost</title>
       </Helmet>
       {!ntlmAuth && <LoginForm />}
     </>
