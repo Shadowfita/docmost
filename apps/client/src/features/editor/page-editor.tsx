@@ -98,8 +98,8 @@ export default function PageEditor({ pageId, editable }: PageEditorProps) {
   }, [remoteProvider, localProvider]);
 
   const extensions = [
-    ...mainExtensions,
-    ...collabExtensions(remoteProvider, currentUser.user),
+    ... mainExtensions,
+    ... collabExtensions(remoteProvider, currentUser.user),
   ];
 
   const editor = useEditor(
@@ -186,6 +186,7 @@ export default function PageEditor({ pageId, editable }: PageEditorProps) {
           )}
         </div>
       )}
+      <div onClick={() => editor.commands.focus('end')} style={{ paddingBottom: '20vh' }}></div>
     </div>
   ) : (
     <EditorSkeleton />

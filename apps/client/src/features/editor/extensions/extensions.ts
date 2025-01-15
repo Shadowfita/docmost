@@ -35,6 +35,7 @@ import {
   CustomCodeBlock,
   Drawio,
   Excalidraw,
+  Embed,
   TableofContents,
 } from "@docmost/editor-ext";
 import {
@@ -54,6 +55,7 @@ import AttachmentView from "@/features/editor/components/attachment/attachment-v
 import CodeBlockView from "@/features/editor/components/code-block/code-block-view.tsx";
 import DrawioView from "../components/drawio/drawio-view";
 import ExcalidrawView from "@/features/editor/components/excalidraw/excalidraw-view.tsx";
+import EmbedView from "@/features/editor/components/embed/embed-view.tsx";
 import plaintext from "highlight.js/lib/languages/plaintext";
 import powershell from "highlight.js/lib/languages/powershell";
 import elixir from "highlight.js/lib/languages/elixir";
@@ -63,6 +65,8 @@ import clojure from "highlight.js/lib/languages/clojure";
 import fortran from "highlight.js/lib/languages/fortran";
 import haskell from "highlight.js/lib/languages/haskell";
 import scala from "highlight.js/lib/languages/scala";
+import { MarkdownClipboard } from "@/features/editor/extensions/markdown-clipboard.ts";
+import i18n from "i18next";
 import TableOfContentsView from "../components/table-of-contents/table-of-contents-view";
 
 const lowlight = createLowlight(common);
@@ -94,13 +98,13 @@ export const mainExtensions = [
   Placeholder.configure({
     placeholder: ({ node }) => {
       if (node.type.name === "heading") {
-        return `Heading ${node.attrs.level}`;
+        return i18n.t("Heading {{level}}", { level: node.attrs.level });
       }
       if (node.type.name === "detailsSummary") {
-        return "Toggle title";
+        return i18n.t("Toggle title");
       }
       if (node.type.name === "paragraph") {
-        return 'Write anything. Enter "/" for commands';
+        return i18n.t('Write anything. Enter "/" for commands');
       }
     },
     includeChildren: true,
@@ -131,7 +135,6 @@ export const mainExtensions = [
       class: "comment-mark",
     },
   }),
-
   Table.configure({
     resizable: true,
     lastColumnResizable: false,
@@ -140,7 +143,6 @@ export const mainExtensions = [
   TableRow,
   TableCell,
   TableHeader,
-
   MathInline.configure({
     view: MathInlineView,
   }),
@@ -151,6 +153,7 @@ export const mainExtensions = [
   DetailsSummary,
   DetailsContent,
   Youtube.configure({
+    addPasteHandler: false,
     controls: true,
     nocookie: true,
   }),
@@ -180,6 +183,12 @@ export const mainExtensions = [
   }),
   Excalidraw.configure({
     view: ExcalidrawView,
+  }),
+  Embed.configure({
+    view: EmbedView,
+  }),
+  MarkdownClipboard.configure({
+    transformPastedText: true,
   }),
   TableofContents.configure({
     view: TableOfContentsView

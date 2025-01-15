@@ -43,6 +43,11 @@ export class EnvironmentService {
     return this.configService.get<string>('STORAGE_DRIVER', 'local');
   }
 
+  getFileUploadSizeLimit(): string {
+
+    return this.configService.get<string>('FILE_UPLOAD_SIZE_LIMIT', '50mb');
+  }
+
   getAwsS3AccessKeyId(): string {
     return this.configService.get<string>('AWS_S3_ACCESS_KEY_ID');
   }
@@ -117,6 +122,8 @@ export class EnvironmentService {
     return this.configService.get<string>('POSTMARK_TOKEN');
   }
 
+  getDrawioUrl(): string {
+    return this.configService.get<string>('DRAWIO_URL');
   getLdapBaseDn(): string {
     return this.configService.get<string>('LDAP_BASEDN')
   }
